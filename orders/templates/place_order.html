@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load orders_tags %}
+
+{% block title %}Place Order - Tasty Restaurant{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-6">Place Your Order</h1>
+
+    {% if cart_items %}
+        <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+            <h2 class="text-2xl font-bold mb-4">Order Summary</h2>
+            <ul>
+                {% for item in cart_items %}
+                    <li class="py-3 flex justify-between items-start">
+                        <div>
+                            <span class="font-medium">{{ item.menu_item.name }} (x{{ item.quantity }})</span>
+                            {% if item.notes %}
+                                <p class="text-sm text-gray-500 italic mt-1">Notes: {{ item.notes }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-gray-700">${{ item.menu_item.price|multiply:item.quantity|floatformat:2 }}</span>
+                            <a href="{% url 'remove_from_cart' item.menu_item.id %}?return_to=/place_order/" class="text-red-600 hover:text-red-800 text-sm font-medium" title="Remove">
+                                ✕
+                            </a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="mt-4 pt-3 border-t border-gray-200">
+                <p class="text-lg font-semibold text-gray-800 flex justify-between">
+                    <span>Total:</span>
+                    <span>${{ total_price|floatformat:2 }}</span>
+                </p>
+            </div>
+        </div>
+
+        {% if not user.is_authenticated %}
+            <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                <h2 class="text-2xl font-bold mb-4">Guest Information</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="{{ form.email.id_for_label }}" class="block text-gray-700 font-medium mb-2">{{ form.email.label }}</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <p class="text-red-600 text-sm mt-1">{{ form.email.errors }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="mb-4">
+                        <label for="{{ form.phone.id_for_label }}" class="block text-gray-700 font-medium mb-2">{{ form.phone.label }}</label>
+                        {{ form.phone }}
+                        {% if form.phone.errors %}
+                            <p class="text-red-600 text-sm mt-1">{{ form.phone.errors }}</p>
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 mb-4">
+                        Place Order
+                    </button>
+                    <a href="{% url 'menu' %}" class="block w-full bg-gray-600 text-white text-center px-4 py-2 rounded-lg hover:bg-gray-700">
+                        Back to Menu
+                    </a>
+                </form>
+            </div>
+        {% else %}
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 mb-4">
+                    Place Order
+                </button>
+                <a href="{% url 'menu' %}" class="block w-full bg-gray-600 text-white text-center px-4 py-2 rounded-lg hover:bg-gray-700">
+                    Back to Menu
+                </a>
+            </form>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

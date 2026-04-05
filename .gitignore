@@ -1,0 +1,80 @@
+# Python
+*.py[cod]
+__pycache__/
+*.so
+*.egg-info/
+*.egg
+pip-log.txt
+pip-delete-this-directory.txt
+python-env/
+.env
+.env.*
+
+# Django
+*.log
+*.pot
+*.pyc
+local_settings.py
+db.sqlite3
+media/
+staticfiles/
+
+# Virtualenv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*~
+*.swp
+*.swo
+
+# Mac
+.AppleDouble
+.LSOverride
+
+# Logs
+*.log
+
+# Coverage
+htmlcov/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*,cover
+
+# Pytest
+.pytest_cache/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Distribution / packaging
+build/
+dist/
+.eggs/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# SQLite
+*.sqlite3

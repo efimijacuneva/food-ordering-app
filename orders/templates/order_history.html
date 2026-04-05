@@ -1,0 +1,21 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-4xl font-bold mb-8 text-center text-gray-800">Order History</h1>
+<div class="bg-white p-8 rounded-lg shadow-lg">
+    {% for order in orders %}
+    <div class="border p-6 mb-6 rounded-lg shadow">
+        <p class="text-lg"><strong>Order #{{ order.id }}</strong> - {{ order.created_at }}</p>
+        <p class="text-gray-600">Status: <span class="font-semibold">{{ order.status }}</span></p>
+        <p class="text-gray-600">Total: ${{ order.total_price }}</p>
+        <ul class="mt-2">
+            {% for item in order.orderitem_set.all %}
+            <li class="text-gray-600">{{ item.quantity }} x {{ item.menu_item.name }} (${{ item.menu_item.price }})</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% empty %}
+    <p class="text-gray-600">No orders yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

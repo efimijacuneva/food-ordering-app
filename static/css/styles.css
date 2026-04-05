@@ -1,0 +1,19 @@
+
+body {
+    font-family: 'Inter', Arial, sans-serif;
+}
+nav {
+    transition: all 0.3s ease;
+}
+nav a:hover {
+    transform: scale(1.05);
+}
+button:hover, a.bg-blue-600:hover, a.bg-green-600:hover {
+    transform: translateY(-1px);
+}
+img {
+    transition: transform 0.3s ease;
+}
+img:hover {
+    transform: scale(1.02);
+}
